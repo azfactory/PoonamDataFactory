@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dataflow1",
+						"referenceName": "pollutionDataFlow",
 						"type": "DataFlowReference",
 						"parameters": {
 							"filterDateValue": "\"22-08-2020\""
