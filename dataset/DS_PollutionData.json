@@ -10,8 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"folderPath": "PollutionData",
-				"container": "pollutionrawdata"
+				"folderPath": "PollutionRawData",
+				"container": "pollutiondata"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

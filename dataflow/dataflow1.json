@@ -1,0 +1,34 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_PollutionData",
+						"type": "DatasetReference"
+					},
+					"name": "pollutionDataSource"
+				}
+			],
+			"sinks": [
+				{
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "lastUpdatedDataStream"
+				},
+				{
+					"name": "filteredData"
+				},
+				{
+					"name": "aggregatePollutionData"
+				}
+			],
+			"script": "parameters{\n\tfilterDateValue as string (\"22-08-2020\")\n}\nsource(output(\n\t\tid as short,\n\t\tcountry as string,\n\t\tstate as string,\n\t\tcity as string,\n\t\tstation as string,\n\t\tlast_update as string,\n\t\tpollutant_id as string,\n\t\tpollutant_min as integer,\n\t\tpollutant_max as integer,\n\t\tpollutant_avg as integer,\n\t\tpollutant_unit as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\twildcardPaths:['PollutionRawData/**'],\n\tpartitionBy('hash', 1)) ~> pollutionDataSource\npollutionDataSource derive(LastUpdatedColumn = toDate(last_update, 'dd-MM-yyyy'),\n\tpartitionBy('hash', 1)) ~> lastUpdatedDataStream\nlastUpdatedDataStream filter(LastUpdatedColumn >= toDate('2020-08-22','yyyy-MM-dd')) ~> filteredData\nfilteredData aggregate(groupBy(LastUpdatedColumn,\n\t\tstation,\n\t\tpollutant_id,\n\t\tcity,\n\t\tstate),\n\tpollutant_min = min(pollutant_min),\n\t\tpollutant_max = max(pollutant_max),\n\t\tpollutant_avg = avg(pollutant_avg),\n\tpartitionBy('hash', 1)) ~> aggregatePollutionData\naggregatePollutionData sink(skipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
+		}
+	}
+}

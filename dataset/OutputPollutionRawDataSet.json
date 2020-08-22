@@ -23,7 +23,7 @@
 					"value": "@concat('PollutionRawData', '/' , formatDateTime(utcnow(), 'yyyy') , '/' , formatDateTime(utcnow(), 'MM') , '/' , formatDateTime(utcnow(), 'MM-dd-yyyy'))",
 					"type": "Expression"
 				},
-				"container": "pollutionrawdata"
+				"container": "pollutiondata"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
