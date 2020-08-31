@@ -19,7 +19,8 @@
 						"referenceName": "pollutionDataFlow",
 						"type": "DataFlowReference",
 						"parameters": {
-							"filterDateValue": "\"22-08-2020\""
+							"filterDateValue": "@concat('''',formatDateTime(subtractFromTime(string(utcnow()), pipeline().parameters.LastNumberOfDays_PipeLine,'Day'),'yyyy-MM-dd'),'''')",
+							"lastNumberOfDays": "@pipeline().parameters.LastNumberOfDays_PipeLine"
 						}
 					},
 					"compute": {
@@ -29,6 +30,11 @@
 				}
 			}
 		],
+		"parameters": {
+			"LastNumberOfDays_PipeLine": {
+				"type": "int"
+			}
+		},
 		"annotations": []
 	}
 }
