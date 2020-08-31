@@ -2,7 +2,7 @@
 	"name": "dsStorageBlob",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "AzureBlobStorage1",
+			"referenceName": "InputLinkedServiceStorageBlob",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
