@@ -1,0 +1,23 @@
+{
+	"name": "InputPollutionDataSet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "InputLinkedServiceHttpServer",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation",
+				"relativeUrl": "/resource/3b01bcb8-0b14-4abf-b6f2-c1bfd384ba69?api-key=579b464db66ec23bdd000001db6f8d31eff0408478fc83710b8c735f&format=csv&offset=100&limit=2000&filters=New%20Delhi"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": false,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

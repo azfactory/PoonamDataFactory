@@ -1,0 +1,47 @@
+{
+	"name": "pipelineAggregatePollutionData",
+	"properties": {
+		"activities": [
+			{
+				"name": "dataflow1",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "pollutionDataFlow",
+						"type": "DataFlowReference",
+						"parameters": {
+							"filterDateValue": {
+								"value": "@concat('''',formatDateTime(subtractFromTime(string(utcnow()), pipeline().parameters.LastNumberOfDays_PipeLine,'Day'),'yyyy-MM-dd'),'''')",
+								"type": "Expression"
+							},
+							"lastNumberOfDays": {
+								"value": "@pipeline().parameters.LastNumberOfDays_PipeLine",
+								"type": "Expression"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"LastNumberOfDays_PipeLine": {
+				"type": "int",
+				"defaultValue": 7
+			}
+		},
+		"annotations": []
+	}
+}
