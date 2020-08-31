@@ -19,8 +19,14 @@
 						"referenceName": "pollutionDataFlow",
 						"type": "DataFlowReference",
 						"parameters": {
-							"filterDateValue": "@concat('''',formatDateTime(subtractFromTime(string(utcnow()), pipeline().parameters.LastNumberOfDays_PipeLine,'Day'),'yyyy-MM-dd'),'''')",
-							"lastNumberOfDays": "@pipeline().parameters.LastNumberOfDays_PipeLine"
+							"filterDateValue": {
+								"value": "'@{concat('''',formatDateTime(subtractFromTime(string(utcnow()), pipeline().parameters.LastNumberOfDays_PipeLine,'Day'),'yyyy-MM-dd'),'''')}'",
+								"type": "Expression"
+							},
+							"lastNumberOfDays": {
+								"value": "@pipeline().parameters.LastNumberOfDays_PipeLine",
+								"type": "Expression"
+							}
 						}
 					},
 					"compute": {
