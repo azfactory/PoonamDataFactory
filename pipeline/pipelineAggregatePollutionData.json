@@ -20,7 +20,7 @@
 						"type": "DataFlowReference",
 						"parameters": {
 							"filterDateValue": {
-								"value": "'@{concat('''',formatDateTime(subtractFromTime(string(utcnow()), pipeline().parameters.LastNumberOfDays_PipeLine,'Day'),'yyyy-MM-dd'),'''')}'",
+								"value": "@concat('''',formatDateTime(subtractFromTime(string(utcnow()), pipeline().parameters.LastNumberOfDays_PipeLine,'Day'),'yyyy-MM-dd'),'''')",
 								"type": "Expression"
 							},
 							"lastNumberOfDays": {
