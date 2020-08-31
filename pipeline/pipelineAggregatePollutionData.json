@@ -32,7 +32,8 @@
 		],
 		"parameters": {
 			"LastNumberOfDays_PipeLine": {
-				"type": "int"
+				"type": "int",
+				"defaultValue": 7
 			}
 		},
 		"annotations": []
