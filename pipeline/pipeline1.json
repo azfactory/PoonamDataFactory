@@ -1,0 +1,65 @@
+{
+	"name": "pipeline1",
+	"properties": {
+		"activities": [
+			{
+				"name": "Execute Pipeline1",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pipelineExtractPollutionData",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": false,
+					"parameters": {
+						"pollutionFileName": {
+							"value": "@pipeline().parameters.pollutionFileName",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "Execute Pipeline2",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Execute Pipeline1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pipelineAggregatePollutionData",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"LastNumberOfDays_PipeLine": {
+							"value": "@pipeline().parameters.LastNumberOfDays_PipeLine",
+							"type": "Expression"
+						}
+					}
+				}
+			}
+		],
+		"parameters": {
+			"pollutionFileName": {
+				"type": "string",
+				"defaultValue": "\"poc\""
+			},
+			"LastNumberOfDays_PipeLine": {
+				"type": "int",
+				"defaultValue": 7
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2020-09-03T06:35:17Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

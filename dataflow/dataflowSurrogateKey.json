@@ -29,7 +29,7 @@
 					"name": "Select1"
 				}
 			],
-			"script": "source(output(\n\t\tempname as string,\n\t\t{ department} as short,\n\t\t{ city} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\twildcardPaths:['emp.csv'],\n\tpartitionBy('hash', 1)) ~> sourceBlob\nsourceBlob keyGenerate(output(EmpID as long),\n\tstartAt: 1L,\n\tpartitionBy('hash', 1)) ~> SurrogateKey1\nSurrogateKey1 select(mapColumn(\n\t\tEmpID,\n\t\t{ EmpName} = empname,\n\t\t{ City} = { city},\n\t\tDepartment = { department}\n\t),\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSelect1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['outputSurrogate.csv'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
+			"script": "source(output(\n\t\tempname as string,\n\t\t{ department} as short,\n\t\t{ city} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\twildcardPaths:['emp.csv'],\n\tpartitionBy('hash', 1)) ~> sourceBlob\nsourceBlob keyGenerate(output(EmpID as long),\n\tstartAt: 1L,\n\tpartitionBy('hash', 1)) ~> SurrogateKey1\nSurrogateKey1 select(mapColumn(\n\t\tEmpID,\n\t\t{ EmpName} = empname,\n\t\t{ City} = { city},\n\t\tDepartment = { department}\n\t),\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSelect1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['outputSurrogate.csv'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
 		}
 	}
 }
